@@ -140,6 +140,22 @@ fun AndroidUI3() {
             }
 
             item {
+                TaskListSection()
+            }
+
+            item {
+                QuickActionsGrid()
+            }
+
+            item {
+                UserProfileSummary()
+            }
+
+            item {
+                SettingsTogglesSection()
+            }
+
+            item {
                 RecentActivitySection()
             }
 
@@ -307,6 +323,500 @@ fun SearchBar(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TaskListSection() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Today's Tasks",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+                Text(
+                    text = "3/5",
+                    fontSize = 12.sp,
+                    color = AccentGreen,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.weight(1f)
+            ) {
+                items(listOf(
+                    TaskItem("Review app design", true),
+                    TaskItem("Test user flows", true),
+                    TaskItem("Update documentation", true),
+                    TaskItem("Fix UI bugs", false),
+                    TaskItem("Deploy to production", false)
+                )) { task ->
+                    TaskListItem(task = task)
+                }
+            }
+        }
+    }
+}
+
+data class TaskItem(
+    val title: String,
+    val isCompleted: Boolean
+)
+
+@Composable
+fun TaskListItem(task: TaskItem) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(CircleShape)
+                .background(
+                    if (task.isCompleted) AccentGreen else Color(0xFFE5E7EB)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            if (task.isCompleted) {
+                Icon(
+                    imageVector = Icons.Filled.Check,
+                    contentDescription = "Completed",
+                    tint = Color.White,
+                    modifier = Modifier.size(12.dp)
+                )
+            }
+        }
+
+        Text(
+            text = task.title,
+            fontSize = 12.sp,
+            color = if (task.isCompleted) TextSecondary else TextPrimary,
+            style = if (task.isCompleted) TextStyle(textDecoration = androidx.compose.ui.text.style.TextDecoration.LineThrough) else TextStyle()
+        )
+    }
+}
+
+@Composable
+fun QuickActionsGrid() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Text(
+            text = "Quick Actions",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = TextPrimary,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            QuickActionItem(
+                title = "New Project",
+                icon = Icons.Filled.Add,
+                gradient = Brush.horizontalGradient(
+                    colors = listOf(PrimaryGradientStart, PrimaryGradientEnd)
+                ),
+                modifier = Modifier.weight(1f)
+            )
+
+            QuickActionItem(
+                title = "Messages",
+                icon = Icons.Filled.Email,
+                gradient = Brush.horizontalGradient(
+                    colors = listOf(AccentBlue, Color(0xFF3B82F6))
+                ),
+                modifier = Modifier.weight(1f)
+            )
+
+            QuickActionItem(
+                title = "Calendar",
+                icon = Icons.Filled.DateRange,
+                gradient = Brush.horizontalGradient(
+                    colors = listOf(AccentGreen, Color(0xFF059669))
+                ),
+                modifier = Modifier.weight(1f)
+            )
+
+            QuickActionItem(
+                title = "Settings",
+                icon = Icons.Filled.Settings,
+                gradient = Brush.horizontalGradient(
+                    colors = listOf(AccentPink, Color(0xFFBE185D))
+                ),
+                modifier = Modifier.weight(1f)
+            )
+        }
+    }
+}
+
+@Composable
+fun QuickActionItem(
+    title: String,
+    icon: ImageVector,
+    gradient: Brush,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .height(80.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .clickable { /* Handle click */ },
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 4.dp
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = gradient,
+                    alpha = 0.1f
+                )
+                .padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(gradient),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = title,
+                    tint = Color.White,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+
+            Text(
+                text = title,
+                fontSize = 10.sp,
+                color = TextPrimary,
+                fontWeight = FontWeight.Medium,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
+
+@Composable
+fun UserProfileSummary() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(140.dp)
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Profile Avatar
+            Box(
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(CircleShape)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(PrimaryGradientStart, PrimaryGradientEnd)
+                        )
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "JD",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            // Profile Info
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "John Doe",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+
+                Text(
+                    text = "Product Designer",
+                    fontSize = 12.sp,
+                    color = TextSecondary
+                )
+
+                // Achievement Badges
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    BadgeItem(
+                        text = "Pro",
+                        color = AccentGreen
+                    )
+                    BadgeItem(
+                        text = "15 days",
+                        color = AccentBlue
+                    )
+                    BadgeItem(
+                        text = "Level 8",
+                        color = AccentPink
+                    )
+                }
+            }
+
+            // Level Progress
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "Level 8",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+
+                // Mini Progress Bar
+                Box(
+                    modifier = Modifier
+                        .width(60.dp)
+                        .height(4.dp)
+                        .clip(RoundedCornerShape(2.dp))
+                        .background(Color(0xFFF1F5F9))
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(0.75f)
+                            .height(4.dp)
+                            .clip(RoundedCornerShape(2.dp))
+                            .background(
+                                brush = Brush.horizontalGradient(
+                                    colors = listOf(PrimaryGradientStart, PrimaryGradientEnd)
+                                )
+                            )
+                    )
+                }
+
+                Text(
+                    text = "750/1000",
+                    fontSize = 10.sp,
+                    color = TextSecondary
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun BadgeItem(text: String, color: Color) {
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(color.copy(alpha = 0.1f))
+            .padding(horizontal = 6.dp, vertical = 2.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            fontSize = 9.sp,
+            color = color,
+            fontWeight = FontWeight.Medium
+        )
+    }
+}
+
+@Composable
+fun SettingsTogglesSection() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = "Quick Settings",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = TextPrimary
+            )
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                SettingsToggleItem(
+                    title = "Dark Mode",
+                    subtitle = "Switch to dark theme",
+                    icon = Icons.Filled.Settings,
+                    isEnabled = false,
+                    onToggle = { /* Handle toggle */ }
+                )
+
+                SettingsToggleItem(
+                    title = "Notifications",
+                    subtitle = "Receive app notifications",
+                    icon = Icons.Filled.Notifications,
+                    isEnabled = true,
+                    onToggle = { /* Handle toggle */ }
+                )
+
+                SettingsToggleItem(
+                    title = "Auto-sync",
+                    subtitle = "Sync data automatically",
+                    icon = Icons.Filled.Refresh,
+                    isEnabled = true,
+                    onToggle = { /* Handle toggle */ }
+                )
+
+                SettingsToggleItem(
+                    title = "Analytics",
+                    subtitle = "Help improve the app",
+                    icon = Icons.Filled.Info,
+                    isEnabled = false,
+                    onToggle = { /* Handle toggle */ }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SettingsToggleItem(
+    title: String,
+    subtitle: String,
+    icon: ImageVector,
+    isEnabled: Boolean,
+    onToggle: (Boolean) -> Unit
+) {
+    var checked by remember { mutableStateOf(isEnabled) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { checked = !checked; onToggle(checked) }
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.weight(1f)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(
+                                if (checked) AccentGreen else Color(0xFFE5E7EB),
+                                if (checked) Color(0xFF059669) else Color(0xFFD1D5DB)
+                            )
+                        )
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = title,
+                    tint = Color.White,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Text(
+                    text = title,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = TextPrimary
+                )
+                Text(
+                    text = subtitle,
+                    fontSize = 11.sp,
+                    color = TextSecondary
+                )
+            }
+        }
+
+        androidx.compose.material3.Switch(
+            checked = checked,
+            onCheckedChange = { checked = it; onToggle(it) },
+            colors = androidx.compose.material3.SwitchDefaults.colors(
+                checkedThumbColor = Color.White,
+                checkedTrackColor = AccentGreen,
+                uncheckedThumbColor = Color.White,
+                uncheckedTrackColor = Color(0xFFD1D5DB)
+            )
+        )
     }
 }
 
