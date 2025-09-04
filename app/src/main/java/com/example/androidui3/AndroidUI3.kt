@@ -156,6 +156,18 @@ fun AndroidUI3() {
             }
 
             item {
+                MiniCalendarWidget()
+            }
+
+            item {
+                WeatherForecastCard()
+            }
+
+            item {
+                QuickStatsOverview()
+            }
+
+            item {
                 RecentActivitySection()
             }
 
@@ -817,6 +829,342 @@ fun SettingsToggleItem(
                 uncheckedTrackColor = Color(0xFFD1D5DB)
             )
         )
+    }
+}
+
+@Composable
+fun MiniCalendarWidget() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Calendar Icon
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(AccentBlue, Color(0xFF3B82F6))
+                        )
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.DateRange,
+                    contentDescription = "Calendar",
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+
+            // Calendar Info
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "Today's Schedule",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "3 meetings",
+                        fontSize = 12.sp,
+                        color = AccentBlue,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Text(
+                        text = "•",
+                        fontSize = 12.sp,
+                        color = TextSecondary
+                    )
+                    Text(
+                        text = "2 deadlines",
+                        fontSize = 12.sp,
+                        color = AccentGreen,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+
+                Text(
+                    text = "Next: Team Standup at 10:00 AM",
+                    fontSize = 11.sp,
+                    color = TextSecondary,
+                    lineHeight = 14.sp
+                )
+            }
+
+            // Current Date
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Text(
+                    text = "15",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+                Text(
+                    text = "DEC",
+                    fontSize = 12.sp,
+                    color = TextSecondary,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun WeatherForecastCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Weather Icon
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(Color(0xFFFFF3CD), Color(0xFFFFE082))
+                        )
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "☀️",
+                    fontSize = 24.sp
+                )
+            }
+
+            // Weather Info
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Text(
+                    text = "Sunny & Warm",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+
+                Text(
+                    text = "Perfect weather for outdoor activities",
+                    fontSize = 11.sp,
+                    color = TextSecondary,
+                    lineHeight = 14.sp
+                )
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "25°C",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = AccentGreen
+                    )
+                    Text(
+                        text = "•",
+                        fontSize = 12.sp,
+                        color = TextSecondary
+                    )
+                    Text(
+                        text = "Humidity 45%",
+                        fontSize = 11.sp,
+                        color = TextSecondary
+                    )
+                }
+            }
+
+            // Forecast Preview
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "Tomorrow",
+                    fontSize = 11.sp,
+                    color = TextSecondary
+                )
+                Text(
+                    text = "🌤️",
+                    fontSize = 16.sp
+                )
+                Text(
+                    text = "23°C",
+                    fontSize = 12.sp,
+                    color = TextPrimary,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun QuickStatsOverview() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(140.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = "Quick Overview",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = TextPrimary
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                StatMiniCard(
+                    icon = Icons.Filled.Star,
+                    value = "4.8",
+                    label = "Rating",
+                    gradient = Brush.horizontalGradient(
+                        colors = listOf(Color(0xFFFFD700), Color(0xFFFFA500))
+                    ),
+                    modifier = Modifier.weight(1f)
+                )
+
+                StatMiniCard(
+                    icon = Icons.Filled.ThumbUp,
+                    value = "98%",
+                    label = "Satisfied",
+                    gradient = Brush.horizontalGradient(
+                        colors = listOf(AccentGreen, Color(0xFF059669))
+                    ),
+                    modifier = Modifier.weight(1f)
+                )
+
+                StatMiniCard(
+                    icon = Icons.Filled.Home,
+                    value = "2.3h",
+                    label = "Avg Time",
+                    gradient = Brush.horizontalGradient(
+                        colors = listOf(AccentBlue, Color(0xFF3B82F6))
+                    ),
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun StatMiniCard(
+    icon: ImageVector,
+    value: String,
+    label: String,
+    gradient: Brush,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .height(70.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .clickable { /* Handle click */ },
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 2.dp
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = gradient,
+                    alpha = 0.05f
+                )
+                .padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = label,
+                tint = AccentBlue,
+                modifier = Modifier.size(20.dp)
+            )
+
+            Text(
+                text = value,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = TextPrimary
+            )
+
+            Text(
+                text = label,
+                fontSize = 10.sp,
+                color = TextSecondary,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
