@@ -206,12 +206,24 @@ fun HeaderSection() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column {
-                Text(
-                    text = "Welcome back! 👋",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextPrimary
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "Welcome back! 👋",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                    // Live indicator
+                    Box(
+                        modifier = Modifier
+                            .size(8.dp)
+                            .clip(CircleShape)
+                            .background(Color.Red)
+                    )
+                }
                 Text(
                     text = "Here's what's happening today",
                     fontSize = 14.sp,
@@ -370,12 +382,21 @@ fun TaskListSection() {
                     fontWeight = FontWeight.Bold,
                     color = TextPrimary
                 )
-                Text(
-                    text = "3/5",
-                    fontSize = 12.sp,
-                    color = AccentGreen,
-                    fontWeight = FontWeight.Bold
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = "3/5",
+                        fontSize = 12.sp,
+                        color = AccentGreen,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "✅",
+                        fontSize = 10.sp
+                    )
+                }
             }
 
             LazyColumn(
