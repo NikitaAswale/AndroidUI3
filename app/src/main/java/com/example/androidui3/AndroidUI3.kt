@@ -114,13 +114,37 @@ fun AndroidUI3() {
             }
 
             item {
-                Text(
-                    text = "Features",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextPrimary,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Features",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                    // Small beta indicator
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(
+                                brush = Brush.horizontalGradient(
+                                    colors = listOf(Color(0xFFFF6B6B), Color(0xFFFF8E8E))
+                                )
+                            )
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "✨ New",
+                            fontSize = 10.sp,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
             }
 
             item {
@@ -224,12 +248,35 @@ fun HeaderSection() {
                             .background(Color.Red)
                     )
                 }
-                Text(
-                    text = "Here's what's happening today",
-                    fontSize = 14.sp,
-                    color = TextSecondary,
-                    fontWeight = FontWeight.Normal
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Text(
+                        text = "Here's what's happening today",
+                        fontSize = 14.sp,
+                        color = TextSecondary,
+                        fontWeight = FontWeight.Normal
+                    )
+                    // Small activity indicator
+                    Box(
+                        modifier = Modifier
+                            .size(6.dp)
+                            .clip(CircleShape)
+                            .background(Color.Green)
+                    )
+                    Text(
+                        text = "•",
+                        fontSize = 12.sp,
+                        color = TextSecondary
+                    )
+                    Text(
+                        text = "Live",
+                        fontSize = 11.sp,
+                        color = Color.Green,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
             }
 
             // Profile with Notification Badge
@@ -463,13 +510,22 @@ fun QuickActionsGrid() {
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Text(
-            text = "Quick Actions",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            color = TextPrimary,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "⚡",
+                        fontSize = 18.sp
+                    )
+                    Text(
+                        text = "Quick Actions",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -1005,12 +1061,22 @@ fun WeatherForecastCard() {
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
-                Text(
-                    text = "Sunny & Warm",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextPrimary
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Text(
+                        text = "Sunny & Warm",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                    // Small updated indicator
+                    Text(
+                        text = "🔄",
+                        fontSize = 12.sp
+                    )
+                }
 
                 Text(
                     text = "Perfect weather for outdoor activities",
@@ -1106,7 +1172,8 @@ fun QuickStatsOverview() {
                     gradient = Brush.horizontalGradient(
                         colors = listOf(Color(0xFFFFD700), Color(0xFFFFA500))
                     ),
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    extraIcon = "⭐"
                 )
 
                 StatMiniCard(
@@ -1139,7 +1206,8 @@ fun StatMiniCard(
     value: String,
     label: String,
     gradient: Brush,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    extraIcon: String? = null
 ) {
     Card(
         modifier = modifier
@@ -1172,12 +1240,23 @@ fun StatMiniCard(
                 modifier = Modifier.size(20.dp)
             )
 
-            Text(
-                text = value,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                color = TextPrimary
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = value,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+                extraIcon?.let {
+                    Text(
+                        text = it,
+                        fontSize = 12.sp
+                    )
+                }
+            }
 
             Text(
                 text = label,
@@ -1577,12 +1656,37 @@ fun RecentActivitySection() {
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(
-                text = "Recent Activity",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = TextPrimary
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "📋",
+                    fontSize = 16.sp
+                )
+                Text(
+                    text = "Recent Activity",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+                // Small notification count
+                Box(
+                    modifier = Modifier
+                        .size(16.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFFFF6B6B)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "4",
+                        fontSize = 10.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
