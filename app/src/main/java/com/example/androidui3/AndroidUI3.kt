@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.androidui3.ui.theme.*
 import kotlinx.coroutines.delay
+import androidx.compose.foundation.BorderStroke
 
 data class DashboardFeature(
     val title: String,
@@ -194,6 +195,15 @@ fun AndroidUI3() {
             item {
                 RecentActivitySection()
             }
+
+            item {
+                AchievementSection()
+            }
+
+            item {
+                SocialFeedSection()
+            }
+
 
             item {
                 Spacer(modifier = Modifier.height(100.dp)) // Space for FAB and Bottom Nav
@@ -2021,5 +2031,347 @@ fun BottomNavItem(
             color = if (isSelected) PrimaryGradientStart else TextSecondary,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
         )
+    }
+}
+
+@Composable
+fun AchievementSection() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "🏆",
+                        fontSize = 18.sp
+                    )
+                    Text(
+                        text = "Achievements",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(Color(0xFFFFD700), Color(0xFFFFA500))
+                            )
+                        )
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Level 8",
+                        fontSize = 10.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                AchievementBadge(
+                    title = "First Steps",
+                    icon = "🚀",
+                    isUnlocked = true,
+                    progress = 1f,
+                    modifier = Modifier.weight(1f)
+                )
+
+                AchievementBadge(
+                    title = "Productive",
+                    icon = "⚡",
+                    isUnlocked = true,
+                    progress = 1f,
+                    modifier = Modifier.weight(1f)
+                )
+
+                AchievementBadge(
+                    title = "Social",
+                    icon = "👥",
+                    isUnlocked = false,
+                    progress = 0.6f,
+                    modifier = Modifier.weight(1f)
+                )
+
+                AchievementBadge(
+                    title = "Master",
+                    icon = "👑",
+                    isUnlocked = false,
+                    progress = 0.3f,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun AchievementBadge(
+    title: String,
+    icon: String,
+    isUnlocked: Boolean,
+    progress: Float,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(
+                    if (isUnlocked) {
+                        Brush.linearGradient(
+                            colors = listOf(Color(0xFFFFD700), Color(0xFFFFA500))
+                        )
+                    } else {
+                        Brush.linearGradient(
+                            colors = listOf(Color(0xFFE5E7EB), Color(0xFFD1D5DB))
+                        )
+                    }
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            if (isUnlocked) {
+                Text(
+                    text = icon,
+                    fontSize = 20.sp
+                )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(4.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    // Progress overlay
+                    androidx.compose.foundation.Canvas(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        drawArc(
+                            color = Color.White.copy(alpha = 0.7f),
+                            startAngle = -90f,
+                            sweepAngle = 360f * progress,
+                            useCenter = false,
+                            style = androidx.compose.ui.graphics.drawscope.Stroke(
+                                width = 3f
+                            )
+                        )
+                    }
+                    Text(
+                        text = icon,
+                        fontSize = 16.sp,
+                        color = Color(0xFF9CA3AF)
+                    )
+                }
+            }
+        }
+
+        Text(
+            text = title,
+            fontSize = 10.sp,
+            color = if (isUnlocked) TextPrimary else TextSecondary,
+            fontWeight = if (isUnlocked) FontWeight.Bold else FontWeight.Normal,
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun SocialFeedSection() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(220.dp)
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "👥",
+                        fontSize = 18.sp
+                    )
+                    Text(
+                        text = "Social Feed",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
+                Text(
+                    text = "See all",
+                    fontSize = 12.sp,
+                    color = AccentBlue,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item {
+                    SocialPostItem(
+                        userName = "Sarah Chen",
+                        action = "completed a task",
+                        timeAgo = "2m ago",
+                        userAvatar = "SC"
+                    )
+                }
+                item {
+                    SocialPostItem(
+                        userName = "Mike Johnson",
+                        action = "earned 'Productive' badge",
+                        timeAgo = "15m ago",
+                        userAvatar = "MJ"
+                    )
+                }
+                item {
+                    SocialPostItem(
+                        userName = "Emma Davis",
+                        action = "joined 3 meetings today",
+                        timeAgo = "1h ago",
+                        userAvatar = "ED"
+                    )
+                }
+                item {
+                    SocialPostItem(
+                        userName = "Alex Wilson",
+                        action = "reached Level 5",
+                        timeAgo = "2h ago",
+                        userAvatar = "AW"
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SocialPostItem(
+    userName: String,
+    action: String,
+    timeAgo: String,
+    userAvatar: String
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // User Avatar
+        Box(
+            modifier = Modifier
+                .size(36.dp)
+                .clip(CircleShape)
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            Color(0xFF667EEA),
+                            Color(0xFF764BA2)
+                        )
+                    )
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = userAvatar,
+                color = Color.White,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+        // Post Content
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Text(
+                    text = userName,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+                Text(
+                    text = action,
+                    fontSize = 12.sp,
+                    color = TextSecondary
+                )
+            }
+            Text(
+                text = timeAgo,
+                fontSize = 10.sp,
+                color = Color(0xFF9CA3AF)
+            )
+        }
+
+        // Action Button
+        IconButton(
+            onClick = { /* Handle like/comment */ },
+            modifier = Modifier.size(24.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Filled.FavoriteBorder,
+                contentDescription = "Like",
+                tint = Color(0xFF9CA3AF),
+                modifier = Modifier.size(14.dp)
+            )
+        }
     }
 }
