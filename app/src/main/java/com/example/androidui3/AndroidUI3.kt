@@ -204,6 +204,9 @@ fun AndroidUI3() {
                 SocialFeedSection()
             }
 
+            item {
+                QuickTipsWidget()
+            }
 
             item {
                 Spacer(modifier = Modifier.height(100.dp)) // Space for FAB and Bottom Nav
@@ -2372,6 +2375,81 @@ fun SocialPostItem(
                 tint = Color(0xFF9CA3AF),
                 modifier = Modifier.size(14.dp)
             )
+        }
+    }
+}
+
+@Composable
+fun QuickTipsWidget() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Tip Icon
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(Color(0xFF8B5CF6), Color(0xFF7C3AED))
+                        )
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "💡",
+                    fontSize = 20.sp
+                )
+            }
+
+            // Tip Content
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "Pro Tip",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+                Text(
+                    text = "Complete 5 tasks today to unlock a special achievement!",
+                    fontSize = 12.sp,
+                    color = TextSecondary,
+                    lineHeight = 16.sp
+                )
+            }
+
+            // Action Button
+            IconButton(
+                onClick = { /* Handle tip action */ },
+                modifier = Modifier.size(32.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowForward,
+                    contentDescription = "Next tip",
+                    tint = AccentBlue,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
         }
     }
 }
