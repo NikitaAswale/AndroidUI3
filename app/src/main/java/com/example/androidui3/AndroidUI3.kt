@@ -209,6 +209,10 @@ fun AndroidUI3() {
             }
 
             item {
+                MiniWeatherCard()
+            }
+
+            item {
                 Spacer(modifier = Modifier.height(100.dp)) // Space for FAB and Bottom Nav
             }
         }
@@ -2449,6 +2453,101 @@ fun QuickTipsWidget() {
                     tint = AccentBlue,
                     modifier = Modifier.size(16.dp)
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun MiniWeatherCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Weather Info
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "☀️",
+                        fontSize = 24.sp
+                    )
+                    Text(
+                        text = "Sunny",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
+
+                Text(
+                    text = "72°F",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+
+                Text(
+                    text = "Feels like 75°F",
+                    fontSize = 12.sp,
+                    color = TextSecondary
+                )
+            }
+
+            // Location and Time
+            Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "San Francisco",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = TextPrimary
+                )
+
+                Text(
+                    text = "2:30 PM",
+                    fontSize = 12.sp,
+                    color = TextSecondary
+                )
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = "Weather",
+                        tint = Color(0xFFFFA726),
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Text(
+                        text = "Clear",
+                        fontSize = 12.sp,
+                        color = TextSecondary
+                    )
+                }
             }
         }
     }
