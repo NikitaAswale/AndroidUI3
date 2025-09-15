@@ -181,7 +181,7 @@ fun AndroidUI3() {
             }
 
             item {
-                MiniCalendarWidget()
+                DateDisplayWidget()
             }
 
             item {
@@ -210,6 +210,18 @@ fun AndroidUI3() {
 
             item {
                 MiniWeatherCard()
+            }
+
+            item {
+                DailyProgressCard()
+            }
+
+            item {
+                MotivationalQuoteCard()
+            }
+
+            item {
+                DateDisplayWidget()
             }
 
             item {
@@ -1001,112 +1013,6 @@ fun MotivationCard() {
     }
 }
 
-@Composable
-fun MiniCalendarWidget() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(120.dp)
-            .shadow(
-                elevation = 6.dp,
-                shape = RoundedCornerShape(16.dp)
-            ),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Calendar Icon
-            Box(
-                modifier = Modifier
-                    .size(50.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(
-                        brush = Brush.horizontalGradient(
-                            colors = listOf(AccentBlue, Color(0xFF3B82F6))
-                        )
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.DateRange,
-                    contentDescription = "Calendar",
-                    tint = Color.White,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-
-            // Calendar Info
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Text(
-                    text = "Today's Schedule",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextPrimary
-                )
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "3 meetings",
-                        fontSize = 12.sp,
-                        color = AccentBlue,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Text(
-                        text = "•",
-                        fontSize = 12.sp,
-                        color = TextSecondary
-                    )
-                    Text(
-                        text = "2 deadlines",
-                        fontSize = 12.sp,
-                        color = AccentGreen,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-
-                Text(
-                    text = "Next: Team Standup at 10:00 AM",
-                    fontSize = 11.sp,
-                    color = TextSecondary,
-                    lineHeight = 14.sp
-                )
-            }
-
-            // Current Date
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(2.dp)
-            ) {
-                Text(
-                    text = "15",
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextPrimary
-                )
-                Text(
-                    text = "DEC",
-                    fontSize = 12.sp,
-                    color = TextSecondary,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-    }
-}
 
 @Composable
 fun WeatherForecastCard() {
@@ -2546,6 +2452,247 @@ fun MiniWeatherCard() {
                         text = "Clear",
                         fontSize = 12.sp,
                         color = TextSecondary
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DailyProgressCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Progress Icon and Title
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "📊",
+                        fontSize = 20.sp
+                    )
+                    Text(
+                        text = "Today's Progress",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
+
+                Text(
+                    text = "3 of 5 tasks completed",
+                    fontSize = 12.sp,
+                    color = TextSecondary
+                )
+            }
+
+            // Progress Circle
+            Box(
+                modifier = Modifier.size(48.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                androidx.compose.foundation.Canvas(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    drawArc(
+                        color = Color(0xFFF1F5F9),
+                        startAngle = -90f,
+                        sweepAngle = 360f,
+                        useCenter = false,
+                        style = androidx.compose.ui.graphics.drawscope.Stroke(
+                            width = 4f
+                        )
+                    )
+                    drawArc(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(Color(0xFF10B981), Color(0xFF059669))
+                        ),
+                        startAngle = -90f,
+                        sweepAngle = 360f * 0.6f,
+                        useCenter = false,
+                        style = androidx.compose.ui.graphics.drawscope.Stroke(
+                            width = 4f
+                        )
+                    )
+                }
+
+                Text(
+                    text = "60%",
+                    fontSize = 10.sp,
+                    color = TextPrimary,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun MotivationalQuoteCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            Color(0xFFE3F2FD),
+                            Color(0xFFBBDEFB)
+                        )
+                    )
+                )
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "\"The only way to do great work is to love what you do.\"",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = TextPrimary,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 18.sp
+                )
+
+                Text(
+                    text = "— Steve Jobs",
+                    fontSize = 12.sp,
+                    color = TextSecondary,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = "💪",
+                        fontSize = 12.sp
+                    )
+                    Text(
+                        text = "Keep going!",
+                        fontSize = 11.sp,
+                        color = AccentGreen,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DateDisplayWidget() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(110.dp)
+            .shadow(
+                elevation = 6.dp,
+                shape = RoundedCornerShape(16.dp)
+            ),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Calendar Icon and Date
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "📅",
+                        fontSize = 20.sp
+                    )
+                    Text(
+                        text = "Today",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
+
+                Text(
+                    text = "September 15, 2025",
+                    fontSize = 12.sp,
+                    color = TextSecondary
+                )
+            }
+
+            // Date Display
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .clip(CircleShape)
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(Color(0xFF6366F1), Color(0xFF4F46E5))
+                        )
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(2.dp)
+                ) {
+                    Text(
+                        text = "15",
+                        fontSize = 16.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "SEP",
+                        fontSize = 10.sp,
+                        color = Color.White.copy(alpha = 0.8f)
                     )
                 }
             }
