@@ -225,6 +225,18 @@ fun AndroidUI3() {
             }
 
             item {
+                QuickStatsMiniCard()
+            }
+
+            item {
+                WellnessTipCard()
+            }
+
+            item {
+                PomodoroTimerCard()
+            }
+
+            item {
                 Spacer(modifier = Modifier.height(100.dp)) // Space for FAB and Bottom Nav
             }
         }
@@ -2693,6 +2705,287 @@ fun DateDisplayWidget() {
                         text = "SEP",
                         fontSize = 10.sp,
                         color = Color.White.copy(alpha = 0.8f)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun QuickStatsMiniCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(90.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Stats Icon
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(Color(0xFF10B981), Color(0xFF059669))
+                        )
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "📈",
+                    fontSize = 16.sp
+                )
+            }
+
+            // Stats Content
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Text(
+                    text = "Active Sessions",
+                    fontSize = 12.sp,
+                    color = TextSecondary,
+                    fontWeight = FontWeight.Medium
+                )
+                Row(
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = "24",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                    Text(
+                        text = "today",
+                        fontSize = 10.sp,
+                        color = TextSecondary
+                    )
+                }
+            }
+
+            // Trend Indicator
+            Column(
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(2.dp)
+                ) {
+                    Text(
+                        text = "↑",
+                        fontSize = 12.sp,
+                        color = Color(0xFF10B981)
+                    )
+                    Text(
+                        text = "12%",
+                        fontSize = 10.sp,
+                        color = Color(0xFF10B981),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Text(
+                    text = "vs yesterday",
+                    fontSize = 9.sp,
+                    color = TextSecondary
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun WellnessTipCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(110.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            Color(0xFFE8F5E8),
+                            Color(0xFFF0F9FF)
+                        )
+                    )
+                )
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "🌱",
+                        fontSize = 18.sp
+                    )
+                    Text(
+                        text = "Wellness Tip",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
+
+                Text(
+                    text = "Take a 5-minute walk every hour to boost your energy and focus!",
+                    fontSize = 12.sp,
+                    color = TextSecondary,
+                    textAlign = TextAlign.Center,
+                    lineHeight = 16.sp
+                )
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Favorite,
+                        contentDescription = "Heart",
+                        tint = Color(0xFF10B981),
+                        modifier = Modifier.size(12.dp)
+                    )
+                    Text(
+                        text = "Good for you!",
+                        fontSize = 11.sp,
+                        color = Color(0xFF10B981),
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PomodoroTimerCard() {
+    var isRunning by remember { mutableStateOf(false) }
+    var timeLeft by remember { mutableStateOf("25:00") }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Timer Display
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Text(
+                        text = "⏱️",
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        text = "Focus Time",
+                        fontSize = 12.sp,
+                        color = TextSecondary,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+
+                Text(
+                    text = timeLeft,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextPrimary
+                )
+            }
+
+            // Timer Controls
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Play/Pause Button
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(CircleShape)
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(
+                                    if (isRunning) Color(0xFFEF4444) else Color(0xFF10B981),
+                                    if (isRunning) Color(0xFFDC2626) else Color(0xFF059669)
+                                )
+                            )
+                        )
+                        .clickable { isRunning = !isRunning },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = if (isRunning) Icons.Filled.Clear else Icons.Filled.PlayArrow,
+                        contentDescription = if (isRunning) "Pause" else "Start",
+                        tint = Color.White,
+                        modifier = Modifier.size(14.dp)
+                    )
+                }
+
+                // Reset Button
+                IconButton(
+                    onClick = {
+                        isRunning = false
+                        timeLeft = "25:00"
+                    },
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Refresh,
+                        contentDescription = "Reset",
+                        tint = TextSecondary,
+                        modifier = Modifier.size(16.dp)
                     )
                 }
             }
