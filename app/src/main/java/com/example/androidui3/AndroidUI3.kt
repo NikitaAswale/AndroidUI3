@@ -237,6 +237,18 @@ fun AndroidUI3() {
             }
 
             item {
+                HabitTrackerCard()
+            }
+
+            item {
+                DailyGoalsCard()
+            }
+
+            item {
+                MoodTrackerCard()
+            }
+
+            item {
                 Spacer(modifier = Modifier.height(100.dp)) // Space for FAB and Bottom Nav
             }
         }
@@ -2987,6 +2999,307 @@ fun PomodoroTimerCard() {
                         tint = TextSecondary,
                         modifier = Modifier.size(16.dp)
                     )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun HabitTrackerCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(120.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // Header
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "📋",
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        text = "Daily Habits",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
+                Text(
+                    text = "3/5",
+                    fontSize = 12.sp,
+                    color = Color(0xFF10B981),
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            // Habits List
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                HabitItem("Read for 20 minutes", true)
+                HabitItem("Drink 8 glasses of water", true)
+                HabitItem("Exercise for 30 minutes", true)
+                HabitItem("Meditate for 10 minutes", false)
+                HabitItem("Write in journal", false)
+            }
+        }
+    }
+}
+
+@Composable
+fun HabitItem(title: String, isCompleted: Boolean) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(CircleShape)
+                .background(
+                    if (isCompleted) Color(0xFF10B981) else Color(0xFFE5E7EB)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            if (isCompleted) {
+                Text(
+                    text = "✓",
+                    color = Color.White,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
+
+        Text(
+            text = title,
+            fontSize = 12.sp,
+            color = if (isCompleted) TextSecondary else TextPrimary,
+            style = if (isCompleted) TextStyle(textDecoration = androidx.compose.ui.text.style.TextDecoration.LineThrough) else TextStyle()
+        )
+    }
+}
+
+@Composable
+fun DailyGoalsCard() {
+    var goals by remember { mutableStateOf(listOf(
+        GoalItem("Complete 5 tasks", true, 5, 5),
+        GoalItem("Read for 30 minutes", true, 30, 30),
+        GoalItem("Exercise", false, 2, 5),
+        GoalItem("Learn something new", true, 1, 1)
+    )) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(140.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // Header
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "🎯",
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        text = "Daily Goals",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
+                Text(
+                    text = "75%",
+                    fontSize = 12.sp,
+                    color = Color(0xFF10B981),
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            // Goals List
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(goals.take(3)) { goal ->
+                    GoalItemRow(goal)
+                }
+            }
+        }
+    }
+}
+
+data class GoalItem(
+    val title: String,
+    val isCompleted: Boolean,
+    val current: Int,
+    val target: Int
+)
+
+@Composable
+fun GoalItemRow(goal: GoalItem) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            Text(
+                text = goal.title,
+                fontSize = 12.sp,
+                color = TextPrimary,
+                fontWeight = FontWeight.Medium
+            )
+            Text(
+                text = "${goal.current}/${goal.target}",
+                fontSize = 10.sp,
+                color = TextSecondary
+            )
+        }
+
+        // Progress Bar
+        Box(
+            modifier = Modifier
+                .width(60.dp)
+                .height(4.dp)
+                .clip(RoundedCornerShape(2.dp))
+                .background(Color(0xFFF1F5F9))
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(fraction = goal.current.toFloat() / goal.target.toFloat())
+                    .height(4.dp)
+                    .clip(RoundedCornerShape(2.dp))
+                    .background(
+                        brush = Brush.horizontalGradient(
+                            colors = listOf(Color(0xFF6366F1), Color(0xFF4F46E5))
+                        )
+                    )
+            )
+        }
+    }
+}
+
+@Composable
+fun MoodTrackerCard() {
+    val moods = listOf("😊", "😐", "😔", "😴", "😤")
+    var selectedMood by remember { mutableStateOf(0) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .shadow(
+                elevation = 4.dp,
+                shape = RoundedCornerShape(12.dp)
+            ),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Mood Info
+            Column(
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "😊",
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        text = "How are you feeling?",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary
+                    )
+                }
+
+                Text(
+                    text = "Tap to update your mood",
+                    fontSize = 11.sp,
+                    color = TextSecondary
+                )
+            }
+
+            // Mood Selector
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                moods.forEachIndexed { index, mood ->
+                    Box(
+                        modifier = Modifier
+                            .size(32.dp)
+                            .clip(CircleShape)
+                            .background(
+                                if (index == selectedMood)
+                                    Color(0xFF6366F1)
+                                else Color(0xFFF1F5F9)
+                            )
+                            .clickable { selectedMood = index },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = mood,
+                            fontSize = 14.sp
+                        )
+                    }
                 }
             }
         }
