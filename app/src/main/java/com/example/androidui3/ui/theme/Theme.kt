@@ -18,11 +18,21 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = AccentPink,
     background = SurfaceDark,
     surface = CardBackgroundDark,
+    surfaceVariant = SurfaceDarkGlass,
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
     onBackground = TextPrimaryDark,
     onSurface = TextPrimaryDark,
+    onSurfaceVariant = TextSecondaryDark,
+    primaryContainer = SurfaceDarkGlass,
+    secondaryContainer = SurfaceDarkGlass,
+    tertiaryContainer = SurfaceDarkGlass,
+    error = ErrorDark,
+    onError = Color.White,
+    errorContainer = ErrorDark.copy(alpha = 0.2f),
+    outline = TextSecondaryDark,
+    outlineVariant = TextSecondaryDark.copy(alpha = 0.5f),
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -31,11 +41,21 @@ private val LightColorScheme = lightColorScheme(
     tertiary = AccentPink,
     background = SurfaceLight,
     surface = CardBackground,
+    surfaceVariant = SurfaceLightGlass,
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
     onBackground = TextPrimary,
     onSurface = TextPrimary,
+    onSurfaceVariant = TextSecondary,
+    primaryContainer = SurfaceLightGlass,
+    secondaryContainer = SurfaceLightGlass,
+    tertiaryContainer = SurfaceLightGlass,
+    error = ErrorColor,
+    onError = Color.White,
+    errorContainer = ErrorColor.copy(alpha = 0.1f),
+    outline = TextSecondary,
+    outlineVariant = TextSecondary.copy(alpha = 0.5f),
 )
 
 @Composable

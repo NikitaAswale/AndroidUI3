@@ -89,6 +89,8 @@ fun AndroidUI3() {
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
+                        PrimaryGradientStart.copy(alpha = 0.02f),
+                        SecondaryGradientStart.copy(alpha = 0.03f),
                         SurfaceLight,
                         Color(0xFFF8FAFC),
                         Color(0xFFF1F5F9)
@@ -1291,117 +1293,26 @@ fun StatMiniCard(
 }
 
 @Composable
-fun WeatherStatusCard() {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(80.dp)
-            .shadow(
-                elevation = 4.dp,
-                shape = RoundedCornerShape(12.dp)
-            ),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Weather Info
-            Column {
-                Text(
-                    text = "Good Morning! ☀️",
-                    fontSize = 14.sp,
-                    color = TextPrimary,
-                    fontWeight = FontWeight.Medium
-                )
-                Text(
-                    text = "Perfect day for productivity",
-                    fontSize = 12.sp,
-                    color = TextSecondary
-                )
-            }
-
-            // Status Indicators
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Battery Status
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Star,
-                        contentDescription = "Battery",
-                        tint = AccentGreen,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Text(
-                        text = "95%",
-                        fontSize = 10.sp,
-                        color = AccentGreen,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-
-                // Network Status
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Info,
-                        contentDescription = "Network",
-                        tint = AccentBlue,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Text(
-                        text = "Strong",
-                        fontSize = 10.sp,
-                        color = AccentBlue,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
 fun WelcomeCard() {
-    Card(
+    GlassCard(
         modifier = Modifier
             .fillMaxWidth()
-            .height(120.dp)
-            .shadow(
-                elevation = 8.dp,
-                shape = RoundedCornerShape(16.dp),
-                spotColor = PrimaryGradientStart.copy(alpha = 0.1f)
-            ),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
+            .height(140.dp)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    brush = Brush.horizontalGradient(
+                    brush = Brush.verticalGradient(
                         colors = listOf(
-                            PrimaryGradientStart.copy(alpha = 0.05f),
-                            PrimaryGradientEnd.copy(alpha = 0.05f)
+                            PrimaryGradientStart.copy(alpha = 0.15f),
+                            PrimaryGradientEnd.copy(alpha = 0.1f),
+                            SecondaryGradientStart.copy(alpha = 0.08f),
+                            SecondaryGradientEnd.copy(alpha = 0.05f)
                         )
                     )
                 )
-                .padding(16.dp)
+                .padding(20.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxSize(),
@@ -1409,41 +1320,153 @@ fun WelcomeCard() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(
-                    verticalArrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.weight(1f)
                 ) {
-                    Text(
-                        text = "Modern UI Dashboard",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = TextPrimary
+                    TypingText(
+                        text = "Welcome to the Future ✨",
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = TextPrimary,
+                        typingSpeed = 80
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Experience the future of mobile interfaces",
-                        fontSize = 12.sp,
-                        color = TextSecondary,
-                        lineHeight = 16.sp
+                        text = "Experience cutting-edge design with smooth animations",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = TextSecondary
                     )
                 }
 
+                // Animated avatar/profile icon
                 Box(
                     modifier = Modifier
                         .size(60.dp)
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(CircleShape)
                         .background(
-                            brush = Brush.horizontalGradient(
-                                colors = listOf(PrimaryGradientStart, PrimaryGradientEnd)
+                            brush = Brush.radialGradient(
+                                colors = listOf(
+                                    AccentBlue.copy(alpha = 0.8f),
+                                    AccentPink.copy(alpha = 0.6f)
+                                )
                             )
                         ),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.Star,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp)
+                    Text(
+                        text = "👋",
+                        fontSize = 24.sp
                     )
                 }
+            }
+        }
+    }
+}
+
+// Enhanced Weather Status Card with modern animations
+@Composable
+fun WeatherStatusCard() {
+    GlassCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(180.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            AccentBlue.copy(alpha = 0.1f),
+                            AccentTeal.copy(alpha = 0.1f),
+                            AccentGreen.copy(alpha = 0.05f)
+                        )
+                    )
+                )
+                .padding(20.dp)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            text = "Current Weather",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = TextPrimary
+                        )
+                        Text(
+                            text = "Perfect day for productivity",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = TextSecondary
+                        )
+                    }
+
+                    PulsingDot(
+                        color = SuccessColor,
+                        modifier = Modifier.size(8.dp)
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            text = "24°C",
+                            style = MaterialTheme.typography.displayLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = TextPrimary
+                        )
+                        Text(
+                            text = "Sunny",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = AccentOrange
+                        )
+                    }
+
+                    // Weather icon with breathing animation
+                    BreathingBox(
+                        content = {
+                            Box(
+                                modifier = Modifier
+                                    .size(60.dp)
+                                    .clip(CircleShape)
+                                    .background(
+                                        brush = Brush.radialGradient(
+                                            colors = listOf(
+                                                AccentOrange.copy(alpha = 0.3f),
+                                                AccentOrange.copy(alpha = 0.1f)
+                                            )
+                                        )
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = "☀️",
+                                    fontSize = 32.sp
+                                )
+                            }
+                        }
+                    )
+                }
+
+                // Progress indicator for weather quality
+                ModernProgressIndicator(
+                    progress = 0.85f,
+                    gradient = Brush.horizontalGradient(
+                        colors = listOf(SuccessColor, AccentGreen)
+                    )
+                )
             }
         }
     }
@@ -1484,39 +1507,45 @@ fun FeatureCard(
     modifier: Modifier = Modifier
 ) {
     val animatedScale by animateFloatAsState(
-        targetValue = if (isSelected) 1.05f else 1f,
+        targetValue = if (isSelected) 1.08f else 1f,
         animationSpec = spring(
             dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow
+            stiffness = Spring.StiffnessMedium
         ),
         label = "scale"
     )
 
-    Card(
+    val glowIntensity by animateFloatAsState(
+        targetValue = if (isSelected) 0.3f else 0.1f,
+        animationSpec = tween(durationMillis = 300),
+        label = "glow"
+    )
+
+    GlassCard(
         modifier = modifier
-            .height(100.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .height(120.dp)
             .clickable(onClick = onClick)
-            .shadow(
-                elevation = if (isSelected) 12.dp else 4.dp,
-                shape = RoundedCornerShape(12.dp)
-            ),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) Color.White else CardBackground
-        )
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    if (isSelected) {
-                        Color(0xFFE0E7FF)
-                    } else {
-                        Color(0xFFF8FAFC)
-                    }
+                    brush = Brush.verticalGradient(
+                        colors = if (isSelected) {
+                            listOf(
+                                PrimaryGradientStart.copy(alpha = 0.1f),
+                                PrimaryGradientEnd.copy(alpha = 0.05f),
+                                Color.White.copy(alpha = 0.9f)
+                            )
+                        } else {
+                            listOf(
+                                Color.White.copy(alpha = 0.95f),
+                                Color.White.copy(alpha = 0.9f)
+                            )
+                        }
+                    )
                 )
-                .padding(12.dp)
+                .padding(16.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
@@ -1524,8 +1553,8 @@ fun FeatureCard(
             ) {
                 Box(
                     modifier = Modifier
-                        .size(32.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(12.dp))
                         .background(feature.gradient),
                     contentAlignment = Alignment.Center
                 ) {
@@ -1869,20 +1898,64 @@ fun FloatingActionButtonExample() {
     ) {
         FloatingActionButton(
             onClick = { /* Handle FAB click */ },
-            modifier = Modifier.padding(16.dp),
-            containerColor = PrimaryGradientStart,
-            contentColor = Color.White,
-            shape = CircleShape,
-            elevation = FloatingActionButtonDefaults.elevation(
-                defaultElevation = 6.dp,
-                pressedElevation = 12.dp
-            )
+            modifier = Modifier.padding(20.dp),
         ) {
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = "Add",
-                modifier = Modifier.size(24.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .size(56.dp)
+                    .background(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                PrimaryGradientStart,
+                                PrimaryGradientEnd,
+                                AccentPink
+                            )
+                        ),
+                        shape = CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add",
+                    tint = Color.White,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+
+        // Additional floating buttons for more actions
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = 20.dp, bottom = 90.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            FloatingActionButton(
+                onClick = { /* Handle secondary action */ },
+                modifier = Modifier.size(44.dp),
+                containerColor = AccentGreen,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Star,
+                    contentDescription = "Favorite",
+                    tint = Color.White,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            FloatingActionButton(
+                onClick = { /* Handle tertiary action */ },
+                modifier = Modifier.size(44.dp),
+                containerColor = AccentOrange,
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Share,
+                    contentDescription = "Share",
+                    tint = Color.White,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
         }
     }
 }
