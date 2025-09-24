@@ -290,7 +290,7 @@ fun HeaderSection() {
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = "Welcome back! 👋",
+                        text = "Hello there! 👋",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = TextPrimary
