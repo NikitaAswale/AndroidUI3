@@ -123,7 +123,7 @@ fun AndroidUI3() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Features 4",
+                        text = "Features 7",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = TextPrimary
