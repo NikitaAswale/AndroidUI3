@@ -141,7 +141,7 @@ fun AndroidUI3() {
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "✨ New",
+                            text = "✨ New 2",
                             fontSize = 10.sp,
                             color = Color.White,
                             fontWeight = FontWeight.Bold
