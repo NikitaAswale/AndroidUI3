@@ -131,7 +131,7 @@ fun AndroidUI3() {
                     // Small beta indicator
                     Box(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
+                            .clip(RoundedCornerShape(18.dp))
                             .background(
                                 brush = Brush.horizontalGradient(
                                     colors = listOf(Color(0xFFFF6B6B), Color(0xFFFF8E8E))
